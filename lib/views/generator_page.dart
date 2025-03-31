@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movie_matcher/providers/my_app_state.dart';
 import 'package:movie_matcher/widgets/big_card.dart';
+import 'package:movie_matcher/widgets/swipeable_cards.dart';
 import 'package:provider/provider.dart';
 
 class GeneratorPage extends StatelessWidget {
@@ -20,31 +21,22 @@ class GeneratorPage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          BigCard(pair: pair),
-
-          SizedBox(height: 10),
-
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ElevatedButton.icon(
-                onPressed: () {
-                  appState.toggleFavorite();
-                },
-                icon: Icon(icon),
-                label: Text('Like'),
-              ),
-
-              SizedBox(width: 10),
-
-              ElevatedButton(
-                onPressed: () {
-                  appState.getNext();
-                },
-                child: Text('Next'),
-              ),
-            ],
+          TextButton(
+              onPressed: () => appState.fetchMovies(),
+              child: Text("Fetch test")),
+          SizedBox(
+            height: 200,
+            child: ListView.builder(
+              itemBuilder: (context, index) {
+                return ListTile(
+                    title: Text(appState.currentMovies[index]["title"]));
+              },
+              itemCount: appState.currentMovies.length,
+            ),
           ),
+          BigCard(pair: pair),
+          SizedBox(height: 10),
+          SwipeableCards()
         ],
       ),
     );

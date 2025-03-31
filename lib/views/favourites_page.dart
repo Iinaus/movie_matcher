@@ -3,6 +3,7 @@ import 'package:movie_matcher/providers/my_app_state.dart';
 import 'package:provider/provider.dart';
 
 class FavouritesPage extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);

@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:movie_matcher/providers/my_app_state.dart';
 import 'package:movie_matcher/views/my_home_page.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() {
+Future<void> main() async {
+  await dotenv.load(fileName: ".env");
+  print("${dotenv.env["TMBD_READ_ACCESS_KEY"]}");
   runApp(MyApp());
 }
 

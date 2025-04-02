@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movie_matcher/providers/moviematch.dart';
 import 'package:movie_matcher/providers/my_app_state.dart';
 import 'package:movie_matcher/widgets/big_card.dart';
 import 'package:movie_matcher/widgets/swipeable_cards.dart';
@@ -21,6 +22,9 @@ class GeneratorPage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          TextButton(
+              onPressed: () => context.read<MovieMatchProvider>().send(),
+              child: Text("Test grpc")),
           TextButton(
               onPressed: () => appState.fetchMovies(),
               child: Text("Fetch test")),

@@ -1,30 +1,37 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:movie_matcher/providers/moviematch.dart';
+import 'package:movie_matcher/providers/my_app_state.dart';
+import 'package:movie_matcher/views/generator_page.dart';
+import 'package:provider/provider.dart';
 
-import 'package:movie_matcher/main.dart';
+class FakeMovieMatchProvider extends ChangeNotifier implements MovieMatchProvider {
+  @override
+  void send() {}
+}
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('GeneratorPage has two text buttons', (WidgetTester tester) async {    
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    final appState = MyAppState();
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider<MyAppState>.value(value: appState),
+          ChangeNotifierProvider<MovieMatchProvider>(create: (_) => FakeMovieMatchProvider()),
+        ],
+        child: MaterialApp(
+          home: Scaffold(
+            body: GeneratorPage(),
+          ),
+        ),
+      ),
+    );
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    await tester.pumpAndSettle();
+
+    expect(find.text('Test grpc'), findsOneWidget);
+    expect(find.text('Fetch test'), findsOneWidget); 
   });
 }

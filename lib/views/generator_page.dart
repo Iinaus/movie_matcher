@@ -9,7 +9,7 @@ class GeneratorPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
-    var pair = appState.current;
+    var pair = appState.current;    
 
     IconData icon;
     if (appState.favorites.contains(pair)) {
@@ -22,7 +22,22 @@ class GeneratorPage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          TextButton(
+          FutureBuilder(future: appState.fetchMovies(), builder: (context, snapshot) {
+
+            if(snapshot.connectionState == ConnectionState.waiting) {
+              return CircularProgressIndicator();
+            }
+
+            if(snapshot.connectionState == ConnectionState.done 
+            && !snapshot.hasError 
+            && snapshot.hasData) { 
+              return SwipeableCards(snapshot.data!);
+            }
+
+            return Text("Error fetching movies");
+
+          })
+          /*TextButton(
               onPressed: () => context.read<MovieMatchProvider>().send(),
               child: Text("Test grpc")),
           TextButton(
@@ -40,7 +55,7 @@ class GeneratorPage extends StatelessWidget {
           ),
           BigCard(pair: pair),
           SizedBox(height: 10),
-          SwipeableCards()
+          SwipeableCards()*/
         ],
       ),
     );

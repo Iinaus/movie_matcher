@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
+import 'package:movie_matcher/models/movie.dart';
 
 class MyAppState extends ChangeNotifier {
 
@@ -27,7 +28,7 @@ class MyAppState extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> fetchMovies() async {
+  Future<List<Movie>> fetchMovies() async {
 
     try {
       var url = Uri.parse('https://api.themoviedb.org/3/movie/popular?language=en-US&page=1');
@@ -41,15 +42,19 @@ class MyAppState extends ChangeNotifier {
         throw Exception('Failed to load movies: ${response.statusCode}');        
       }
 
-      var data = jsonDecode(response.body);
+      var data = jsonDecode(response.body) as Map<String, dynamic>;
 
-      if (data["results"] != null) {
+      List moviesJson = data["results"];
+
+      return moviesJson.map((movieJson) => Movie.fromJson(movieJson)).toList();
+
+      /*if (data["results"] != null) {
         currentMovies.addAll(data["results"]);
       } else {
         throw Exception('No results found in the response');
       }
 
-      notifyListeners();
+      notifyListeners();*/
 
     } catch (e) {
       rethrow;

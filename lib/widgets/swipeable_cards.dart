@@ -20,7 +20,11 @@ class SwipeableCards extends StatelessWidget {
     
     var movieMatch = context.read<MovieMatchProvider>();
 
-    if (movies.isEmpty){
+    List<Movie> filteredMovies = movies.where((movie) {
+      return !appState.favorites.any((favorite) => favorite.id == movie.id);
+    }).toList();
+
+    if (filteredMovies.isEmpty || filteredMovies.length == 1){
       return Text("No movies available");
     }
 
@@ -33,7 +37,7 @@ class SwipeableCards extends StatelessWidget {
               cardBuilder: (context, index, percentThresholdX, percentThresholdY) {
 
                 var baseUrl = "https://image.tmdb.org/t/p/w500";
-                var posterPath = movies[index].posterPath;
+                var posterPath = filteredMovies[index].posterPath;
                 var fullImageUrl = baseUrl + posterPath;
 
                 return Container(
@@ -41,13 +45,13 @@ class SwipeableCards extends StatelessWidget {
                   child: Image.network(fullImageUrl)
                 );
               },
-              cardsCount: movies.length,
+              cardsCount: filteredMovies.length,
               onSwipe: (oldIndex, currentIndex, direction) async {
                 print("$oldIndex $currentIndex $direction");
 
                 if (direction == CardSwiperDirection.right) {
-                  movieMatch.send(movies[oldIndex].originalTitle);
-                  appState.addFavorite(movies[oldIndex]);
+                  movieMatch.send(filteredMovies[oldIndex].originalTitle);
+                  appState.addFavorite(filteredMovies[oldIndex]);
                 }
 
                 return true;

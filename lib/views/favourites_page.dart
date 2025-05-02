@@ -31,7 +31,13 @@ class FavouritesPage extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.favorite),
             title: Text(movie.originalTitle),
-          ),
+            trailing: IconButton(
+              icon: Icon(Icons.delete),
+              onPressed: () {
+                appState.deleteFavorite(context, movie);
+              },
+            )
+          ),          
       ],
     );
   }

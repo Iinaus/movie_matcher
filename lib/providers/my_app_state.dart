@@ -12,9 +12,44 @@ class MyAppState extends ChangeNotifier {
 
   var favorites = <Movie>[];
 
-  void addFavorite(movie) {
-    favorites.add(movie);
-    notifyListeners();
+  void addFavorite(Movie movie) {
+    if (!favorites.any((fav) => fav.id == movie.id && fav.originalTitle == movie.originalTitle)) {
+      favorites.add(movie);
+    }
+  }
+
+  void deleteFavorite(BuildContext context, Movie movie) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Comfirm deletion"),
+          content: Text("Are you sure you want to delete '${movie.originalTitle}' from your favorites?"),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () {
+                favorites.remove(movie);
+                notifyListeners();
+                Navigator.of(context).pop();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('${movie.originalTitle} has been deleted from favorites!'),
+                    duration: Duration(seconds: 2),
+                  ),
+                );
+              },
+              child: Text("Delete"),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Future<List<Movie>> fetchMovies() async {

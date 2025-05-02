@@ -3,6 +3,7 @@ import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:provider/provider.dart';
 import '../models/movie.dart';
 import '../providers/moviematch.dart';
+import '../providers/my_app_state.dart';
 
 class SwipeableCards extends StatelessWidget {
 
@@ -14,6 +15,8 @@ class SwipeableCards extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    var appState = context.read<MyAppState>();
     
     var movieMatch = context.read<MovieMatchProvider>();
 
@@ -44,6 +47,7 @@ class SwipeableCards extends StatelessWidget {
 
                 if (direction == CardSwiperDirection.right) {
                   movieMatch.send(movies[oldIndex].originalTitle);
+                  appState.addFavorite(movies[oldIndex]);
                 }
 
                 return true;

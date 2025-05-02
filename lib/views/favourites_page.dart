@@ -27,10 +27,10 @@ class FavouritesPage extends StatelessWidget {
               '${appState.favorites.length} favorites:',
               style: style,),
         ),
-        for (var pair in appState.favorites)
+        for (var movie in appState.favorites)
           ListTile(
             leading: Icon(Icons.favorite),
-            title: Text(pair.asLowerCase),
+            title: Text(movie.originalTitle),
           ),
       ],
     );

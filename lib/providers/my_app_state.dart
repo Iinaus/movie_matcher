@@ -10,21 +10,10 @@ class MyAppState extends ChangeNotifier {
 
   List currentMovies = [];
 
-  var current = WordPair.random();
+  var favorites = <Movie>[];
 
-  void getNext() {
-    current = WordPair.random();
-    notifyListeners();
-  }
-
-   var favorites = <WordPair>[];
-
-   void toggleFavorite() {
-    if (favorites.contains(current)) {
-      favorites.remove(current);
-    } else {
-      favorites.add(current);
-    }
+  void addFavorite(movie) {
+    favorites.add(movie);
     notifyListeners();
   }
 
@@ -47,14 +36,6 @@ class MyAppState extends ChangeNotifier {
       List moviesJson = data["results"];
 
       return moviesJson.map((movieJson) => Movie.fromJson(movieJson)).toList();
-
-      /*if (data["results"] != null) {
-        currentMovies.addAll(data["results"]);
-      } else {
-        throw Exception('No results found in the response');
-      }
-
-      notifyListeners();*/
 
     } catch (e) {
       rethrow;

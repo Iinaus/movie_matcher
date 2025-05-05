@@ -1,6 +1,4 @@
 import 'dart:async';
-
-import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:grpc/grpc.dart';
 import 'package:movie_matcher/generated/moviematch.pbgrpc.dart';
@@ -11,7 +9,7 @@ class MovieMatchProvider extends ChangeNotifier {
   late final MovieMatchClient _stub;
   late final StreamController<StateMessage> _send;
   late final ResponseStream<StateMessage> _receive;
-  String userName = WordPair.random().join();
+  String userName = "";
 
   MovieMatchProvider() {
 
@@ -42,6 +40,7 @@ class MovieMatchProvider extends ChangeNotifier {
 
     _send.add(msg);
 
+    print("Message sent: ${msg.user} - ${msg.data}");
   }
 
 }

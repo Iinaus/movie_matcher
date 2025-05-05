@@ -49,8 +49,9 @@ Ensure these dependencies are installed to ensure smooth execution of the projec
 ### Dev Setup Step-by-Step
 
 1. Clone the project
-2. Install dependencies with command `flutter pub get`
-3. Run the project with two terminals
+2. Create a .env file in the project root. Refer to .env.example for required environment variables.
+3. Install dependencies with command `flutter pub get`
+4. Run the project with two terminals
    - Start the server with command `dart run .\server\server.dart`
    - Start the frontend with command `flutter run`
 

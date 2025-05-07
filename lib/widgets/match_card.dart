@@ -7,24 +7,40 @@ class MatchCard extends StatelessWidget {
   Widget build(BuildContext context) {
 
     var movieMatch = context.watch<MovieMatchProvider>();
-  
-    return AlertDialog(
-      title: Text("It is a match!"),
-      content: Text("You both like movie ${movieMatch.newMessage?.data}."),
-      actions: <Widget>[
-        TextButton(
-          onPressed: () {
-            movieMatch.clearMessage();
-          },
-          child: Text("Continue"),
+
+    return Card(
+      elevation: 5,
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text("It's a match!",
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)
+            ),
+            SizedBox(height: 10),
+            Text("You both like movie ${movieMatch.newMessage?.data}."),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    movieMatch.clearMessage();
+                  },
+                  child: Text("Continue"),
+                ),
+                TextButton(
+                  onPressed: () {
+                    // to-do: show movie card information
+                  },
+                  child: Text("Show movie"),
+                ),
+              ],
+            ),
+          ],
         ),
-        TextButton(
-          onPressed: () {
-            // to-do: show movie card infomation
-          },
-          child: Text("Show movie"),
-        ),
-      ],
+      ),
     );
   }
 }

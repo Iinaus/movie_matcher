@@ -16,10 +16,6 @@ class GeneratorPage extends StatelessWidget {
       return Center(child: SetUsername());
     }
 
-    if (movieMatch.newMessage != null) {
-      return Center(child: MatchCard());
-    }
-
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -33,7 +29,18 @@ class GeneratorPage extends StatelessWidget {
             if(snapshot.connectionState == ConnectionState.done 
             && !snapshot.hasError 
             && snapshot.hasData) { 
-              return SwipeableCards(snapshot.data!);
+              return Stack(
+                children: [
+                  SwipeableCards(snapshot.data!), 
+                  if (movieMatch.newMessage != null)
+                    Positioned.fill(
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: MatchCard(),
+                      ),
+                    ),
+                ],
+              );
             }
 
             return Text("Error fetching movies");

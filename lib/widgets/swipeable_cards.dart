@@ -16,12 +16,12 @@ class SwipeableCards extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    var appState = context.read<MyAppState>();
-    
+    var appState = context.read<MyAppState>();    
     var movieMatch = context.read<MovieMatchProvider>();
 
     List<Movie> filteredMovies = movies.where((movie) {
-      return !appState.favorites.any((favorite) => favorite.id == movie.id);
+      return !appState.favorites.any((favorite) => favorite.id == movie.id)
+          && !appState.skippedMovies.any((skipped) => skipped.id == movie.id);
     }).toList();
 
     if (filteredMovies.isEmpty || filteredMovies.length == 1){
@@ -52,6 +52,10 @@ class SwipeableCards extends StatelessWidget {
                 if (direction == CardSwiperDirection.right) {
                   movieMatch.send(filteredMovies[oldIndex].originalTitle);
                   appState.addFavorite(filteredMovies[oldIndex]);
+                }
+
+                if (direction == CardSwiperDirection.left) {
+                  appState.addSkippedMovie(filteredMovies[oldIndex]);
                 }
 
                 return true;

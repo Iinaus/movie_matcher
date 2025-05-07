@@ -7,8 +7,15 @@ import 'package:movie_matcher/models/movie.dart';
 class MyAppState extends ChangeNotifier {
 
   List currentMovies = [];
-
+  
   var favorites = <Movie>[];
+  var skippedMovies = <Movie>[];
+
+  void addSkippedMovie(Movie movie) {
+    if (!skippedMovies.any((skipped) => skipped.id == movie.id && skipped.originalTitle == movie.originalTitle)) {
+      skippedMovies.add(movie);
+    }
+  }
 
   void addFavorite(Movie movie) {
     if (!favorites.any((fav) => fav.id == movie.id && fav.originalTitle == movie.originalTitle)) {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movie_matcher/providers/moviematch.dart';
 import 'package:movie_matcher/providers/my_app_state.dart';
+import 'package:movie_matcher/widgets/match_card.dart';
 import 'package:movie_matcher/widgets/set_username.dart';
 import 'package:movie_matcher/widgets/swipeable_cards.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +14,10 @@ class GeneratorPage extends StatelessWidget {
 
     if (movieMatch.userName.isEmpty) {
       return Center(child: SetUsername());
+    }
+
+    if (movieMatch.newMessage != null) {
+      return Center(child: MatchCard());
     }
 
     return Center(
@@ -33,7 +38,7 @@ class GeneratorPage extends StatelessWidget {
 
             return Text("Error fetching movies");
 
-          })
+          }),       
         ],
       ),
     );

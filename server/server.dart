@@ -19,6 +19,21 @@ class MovieMatchService extends MovieMatchServiceBase {
   final Map<String, StreamController<StateMessage>> clients = {};
   final Map<String, List<String>> userValues = {};
 
+  MovieMatchService() {
+    userValues['TestUser'] = [
+      'Exterritorial',
+      'Thunderbolts*',
+      'A Working Man',
+      'Havoc',
+      'A Minecraft Movie',
+      'Tarzan',
+      'Rust',
+      'Death of a Unicorn',
+      'ज्वेल थीफ: द हीस्ट बिगिन्स',
+      'Captain America: Brave New World',
+    ];
+  }
+
   @override
   Stream<StateMessage> streamState(ServiceCall call, Stream<StateMessage> request) {
     
@@ -27,7 +42,7 @@ class MovieMatchService extends MovieMatchServiceBase {
 
     request.listen((msg) {
 
-      print(msg.data);
+      print(msg);
 
       currentUser = msg.user;
       clients[msg.user] = controller;

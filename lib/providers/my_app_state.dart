@@ -47,7 +47,7 @@ class MyAppState extends ChangeNotifier {
           ],
         );
       },
-    );
+    ); 
   }
 
   Future<List<Movie>> fetchMovies() async {

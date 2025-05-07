@@ -9,6 +9,7 @@ class MovieMatchProvider extends ChangeNotifier {
   late final MovieMatchClient _stub;
   late final StreamController<StateMessage> _send;
   late final ResponseStream<StateMessage> _receive;
+  StateMessage? newMessage;
   String userName = "";
 
   MovieMatchProvider() {
@@ -22,8 +23,15 @@ class MovieMatchProvider extends ChangeNotifier {
     _receive = _stub.streamState(_send.stream);
 
     _receive.listen((msg) {
-      print("message: ${msg.user}: ${msg.data}");
+      newMessage = msg;
+      print("message: ${msg.user}: ${msg.data}");      
+      notifyListeners();
     });
+  }
+
+  void clearMessage() {
+    newMessage = null;
+    notifyListeners();
   }
 
   void setUserName(String name) {

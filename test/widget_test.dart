@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:movie_matcher/generated/moviematch.pb.dart';
-import 'package:movie_matcher/models/movie.dart';
 import 'package:movie_matcher/providers/moviematch.dart';
 import 'package:movie_matcher/providers/my_app_state.dart';
 import 'package:movie_matcher/views/generator_page.dart';
 import 'package:movie_matcher/widgets/set_username.dart';
-import 'package:movie_matcher/widgets/swipeable_cards.dart';
 import 'package:provider/provider.dart';
 
 class FakeMovieMatchProvider extends ChangeNotifier implements MovieMatchProvider {

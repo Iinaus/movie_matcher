@@ -39,7 +39,6 @@ class MovieMatchProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  //jatkokehitys: pelkän nimen perusteella hakeekin ID ja sen kautta kaikki tiedot
   void send(movieName) {
 
     var msg = StateMessage()

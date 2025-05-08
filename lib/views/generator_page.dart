@@ -31,12 +31,15 @@ class GeneratorPage extends StatelessWidget {
             && snapshot.hasData) { 
               return Stack(
                 children: [
-                  SwipeableCards(snapshot.data!), 
+                  SwipeableCards(snapshot.data!),
                   if (movieMatch.newMessage != null)
                     Positioned.fill(
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: MatchCard(),
+                      child: GestureDetector(
+                        behavior: HitTestBehavior.opaque, 
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: MatchCard(),
+                        )
                       ),
                     ),
                 ],

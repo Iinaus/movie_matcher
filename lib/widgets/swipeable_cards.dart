@@ -58,6 +58,10 @@ class SwipeableCards extends StatelessWidget {
                   appState.addSkippedMovie(filteredMovies[oldIndex]);
                 }
 
+                if (oldIndex == filteredMovies.length - 1) {
+                  appState.incrementCurrentPage();
+                }
+
                 return true;
               },
               isLoop: false,

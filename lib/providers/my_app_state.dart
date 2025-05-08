@@ -6,10 +6,15 @@ import 'package:movie_matcher/models/movie.dart';
 
 class MyAppState extends ChangeNotifier {
 
-  List currentMovies = [];
-  
+  int _currentPage = 1;
   var favorites = <Movie>[];
-  var skippedMovies = <Movie>[];
+  var skippedMovies = <Movie>[];  
+
+  void incrementCurrentPage() {
+    _currentPage++;
+    fetchMovies();
+    notifyListeners();
+  }
 
   void addSkippedMovie(Movie movie) {
     if (!skippedMovies.any((skipped) => skipped.id == movie.id && skipped.originalTitle == movie.originalTitle)) {
@@ -60,7 +65,7 @@ class MyAppState extends ChangeNotifier {
   Future<List<Movie>> fetchMovies() async {
 
     try {
-      var url = Uri.parse('https://api.themoviedb.org/3/movie/popular?language=en-US&page=1');
+      var url = Uri.parse('https://api.themoviedb.org/3/movie/popular?language=en-US&page=$_currentPage');
 
       var response = await http.get(url, headers: {
         "accept":"application/json",

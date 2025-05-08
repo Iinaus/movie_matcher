@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:movie_matcher/providers/my_app_state.dart';
 import 'package:provider/provider.dart';
 
-class FavouritesPage extends StatelessWidget {
+class FavoritesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {

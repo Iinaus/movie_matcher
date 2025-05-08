@@ -12,9 +12,8 @@ void main() {
     });
 
     test('fetchMovies populates currentMovies list', () async {
-      await appState.fetchMovies();
-
-      expect(appState.currentMovies, isNotEmpty);
+      final movies = await appState.fetchMovies();
+      expect(movies, isNotEmpty);
     });
 
     test('fetchMovies throws error with invalid access token', () async {
